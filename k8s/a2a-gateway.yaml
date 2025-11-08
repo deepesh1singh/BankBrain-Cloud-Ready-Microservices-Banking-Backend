@@ -1,0 +1,31 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: a2a-gateway
+  namespace: bankbrain
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: a2a-gateway }
+  template:
+    metadata:
+      labels: { app: a2a-gateway }
+    spec:
+      containers:
+        - name: app
+          image: REPLACE_WITH_REGISTRY/bankbrain-a2a-gateway:REPLACE_TAG
+          ports:
+            - containerPort: 7000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: a2a-gateway
+  namespace: bankbrain
+spec:
+  selector: { app: a2a-gateway }
+  ports:
+    - name: http
+      port: 80
+      targetPort: 7000

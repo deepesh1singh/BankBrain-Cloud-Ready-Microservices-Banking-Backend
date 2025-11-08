@@ -1,0 +1,33 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: support-agent
+  namespace: bankbrain
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: support-agent }
+  template:
+    metadata:
+      labels: { app: support-agent }
+    spec:
+      containers:
+        - name: app
+          image: REPLACE_WITH_REGISTRY/bankbrain-support-agent:REPLACE_TAG
+          envFrom:
+            - configMapRef: { name: bankbrain-config }
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: support-agent
+  namespace: bankbrain
+spec:
+  selector: { app: support-agent }
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080

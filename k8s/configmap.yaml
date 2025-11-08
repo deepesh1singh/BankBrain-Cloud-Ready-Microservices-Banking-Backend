@@ -1,0 +1,12 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bankbrain-config
+  namespace: bankbrain
+data:
+  PROJECT_ID: "<YOUR_GCP_PROJECT>"
+  LOCATION: "us-central1"
+  MODEL_NAME: "gemini-2.5-pro"
+  BANK_BASE_URL: "http://frontend.bank.svc.cluster.local"
+  MCP_URL: "http://mcp-bank-server.bankbrain.svc.cluster.local"

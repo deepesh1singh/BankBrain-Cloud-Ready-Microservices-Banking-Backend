@@ -1,0 +1,20 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: risk-agent
+  namespace: bankbrain
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: risk-agent }
+  template:
+    metadata:
+      labels: { app: risk-agent }
+    spec:
+      containers:
+        - name: worker
+          image: REPLACE_WITH_REGISTRY/bankbrain-risk-agent:REPLACE_TAG
+          envFrom:
+            - configMapRef: { name: bankbrain-config }
+          args: ["--poll-interval=30s"]
